@@ -3,10 +3,9 @@ require 'spec_helper'
 describe MostRecentFive do
   let(:username) { "somegithubuser" }
 
+  let(:most_recent_five) { MostRecentFive.new(username) }
+
   context "submitting the query" do
-
-    let(:most_recent_five) { MostRecentFive.new(username) }
-
     it "queries octokit" do
       expect(Octokit).to receive(:repos).with(
         username,
@@ -19,8 +18,16 @@ describe MostRecentFive do
   end
 
   context "filtering the result" do
-    let(:sample_result) do
+    it "returns a hash" do
+      VCR.use_cassette "repos_api_response" do
+        expect(most_recent_five.call).to be_an_instance_of Hash
+      end
+    end
 
+    it "displays the username" do
+      VCR.use_cassette "repos_api_response" do
+        hash = most_recent_five.call
+      end
     end
   end
 end

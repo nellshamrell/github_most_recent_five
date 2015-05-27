@@ -7,6 +7,7 @@ class MostRecentFive
 
   def call
     repos
+    {}
   end
 
   def repos
